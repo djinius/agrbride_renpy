@@ -1377,4 +1377,4 @@ translate None strings:
     old "unescape: Disables escaping of unicode symbols in unicode strings and print it as is (default)."
     new "unescape: 유니코드 문자열에서 유니코드 기호의 이스케이핑을 비활성화하고 그대로 인쇄합니다(기본값)."
 
-define gui.system_font = 'SourceHanSansLite.ttf'
+define gui.system_font = 'D2Coding-Ver1.3.2-20180524-ligature.ttf'

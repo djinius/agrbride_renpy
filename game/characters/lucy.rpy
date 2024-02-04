@@ -1,5 +1,5 @@
-define 루시 = Character('루시', color="#c8ffc8", image="루시")
+define 루시 = Character('루시', color="#ffc400", image="루시")
 
 image 루시 = "images/standings/lucy.png"
 
-image side 루시 = "루시"
+image side 루시 = Crop((0, 0, 512, 1024), "루시")
