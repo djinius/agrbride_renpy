@@ -148,6 +148,11 @@ define config.save_directory = "agrbride-1706975166"
 
 define config.window_icon = "gui/window_icon.png"
 
+## Side ########################################################################
+##
+## 스탠딩이 표기될 때에는 사이드이미지 출력 안 함
+
+define config.side_image_only_not_showing = True
 
 ## 빌드 구성 #######################################################################
 ##

@@ -1,5 +1,7 @@
 define 세라 = Character('세라', color="#eeff00", image="세라")
 
-image 세라 = "images/standings/cera.png"
+image 세라 평상복 = "images/standings/cera.png"
+image 세라 외출복 = "images/standings/cera_outdoor.png"
+image 세라 SD = "images/standings/cera_chibi.png"
 
-image side 세라 = Crop((0, 0, 512, 1024), "세라")
+image side 세라 = Transform("세라 SD", zoom=.5)

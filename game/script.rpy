@@ -1,16 +1,21 @@
 ﻿# 이 파일에 게임 스크립트를 입력합니다.
 
-# image 문을 사용해 이미지를 정의합니다.
-# image eileen happy = "eileen_happy.png"
+image blank = Solid("#000")
 
 # 여기에서부터 게임이 시작합니다.
 label start:
 
-    만다 "왔냐, 짜샤?"
-    말리 "사과 하나 먹을래?"
-    루시 "다슬기해장국 한 그릇 어떠세요?"
-    세라 "밥 먹여 줘."
-    로잘린드 "계산 결과 이 식사를 마친 후 0.4375kg의 체중이 불어납니다."
-    카라 "꺼억~ 취한다!"
+    scene blank
+
+    show 로잘린드 평상복:
+        align (.1, .0) zoom .6
+    show 루시 평상복:
+        align (.5, .0) zoom .6
+    show 만다 평상복:
+        align (.9, .0) zoom .6
+
+    만다 "Touch my body! 우린 조금씩 빠르게."
+    카라 "Oh everybody! 푸른 하늘 보다 높이."
+    말리 "지금 이 리듬이 좋아. 뜨거운 태양 아래 너와 나."
 
     return
