@@ -7,6 +7,8 @@ label start:
 
     scene blank
 
+    call screen city
+
     show 로잘린드 평상복:
         align (.1, .0) zoom .6
     show 루시 평상복:
