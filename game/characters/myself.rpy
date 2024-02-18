@@ -1,0 +1,1 @@
+define 나 = Character('나', color="#FFFFFF")
