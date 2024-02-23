@@ -8,7 +8,7 @@ default buildings = []
 #    [None, None, None, None, None, None, None, None, None, "busstop", "pension", "cocktailbar"]
 #]
 
-define consultant = ["말리 SD", "로잘린드 SD", "세라 SD", "카라 SD", "만다 SD", "루시 SD"]
+define consultant = [("말리 SD", "maliTeaEvent"), ("로잘린드 SD", None), ("세라 SD", None), ("카라 SD", "charaCakeEvent"), ("만다 SD", "mandaGymEvent"), ("루시 SD", None)]
 define buildingButtons = [["appletree", "grapetree", "peachtree"], ["hive"]]
 
 default cityZoom=cityMinZoom()
@@ -80,15 +80,14 @@ screen city:
 
         hbox:
             xalign 1.
-            for (n, c) in enumerate(consultant):
+            for (n, (c, e)) in enumerate(consultant):
                 imagebutton:
                     idle Transform(c, zoom=.1)
-                    if n == 0:
-                        action Call("maliTeaEvent")
-                    elif n == 3:
-                        action Call("charaCakeEvent")
-                    else:
+                    if e is None:
                         action NullAction()
+                    else:
+                        action Call(e)
+
                     hovered SetLocalVariable("s", c)
                     unhovered SetLocalVariable("s", None)
 
@@ -101,6 +100,10 @@ screen city:
                 for b in bcol:
                     textbutton b:
                         action SetLocalVariable("toPlace", b)
+
+        textbutton "메뉴":
+            action ShowMenu()
+            yalign 1.
 
     if toPlace is None:
         text "None" align (0., 0.)

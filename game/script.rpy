@@ -12,7 +12,7 @@ label start:
     $ initializeCity()
 
 label manageCity:
-
+    scene blank
     call screen city
     jump manageCity
 
