@@ -8,7 +8,7 @@ default buildings = []
 #    [None, None, None, None, None, None, None, None, None, "busstop", "pension", "cocktailbar"]
 #]
 
-define consultant = [("말리 SD", "maliTeaEvent"), ("로잘린드 SD", None), ("세라 SD", None), ("카라 SD", "charaCakeEvent"), ("만다 SD", "mandaGymEvent"), ("루시 SD", None)]
+define consultant = [("말리 SD", "maliTeaEvent"), ("로잘린드 SD", "rosalindChoice"), ("세라 SD", None), ("카라 SD", "charaCakeEvent"), ("만다 SD", "mandaGymEvent"), ("루시 SD", None), ("보미 SD", None)]
 define buildingButtons = [["appletree", "grapetree", "peachtree"], ["hive"]]
 
 default cityZoom=cityMinZoom()
@@ -28,7 +28,6 @@ transform bulidingButton:
         linear .25 zoom 1.
     on hover:
         linear .25 zoom 1.1
-        repeat
 
 screen city:
     default s = None
@@ -51,11 +50,11 @@ screen city:
                         pass
                     elif b is None:
                         imagebutton:
-                            idle Solid("#F00")
+                            idle Solid("#400")
                             xysize (int(256*cityZoom), int(256*cityZoom))
                             pos calcXYPos(x, y, cityZoom) anchor (.5, .75)
                             if toPlace is None:
-                                hover Solid("#FF0")
+                                hover Solid("#330")
                                 action NullAction()
                             else:
                                 hover Transform(toPlace, zoom=cityZoom*.5)
@@ -101,12 +100,19 @@ screen city:
                     textbutton b:
                         action SetLocalVariable("toPlace", b)
 
+        textbutton "읍내":
+            action Call("visitTown")
+            yalign 1.
+
         textbutton "메뉴":
             action ShowMenu()
             yalign 1.
 
     if toPlace is None:
-        text "None" align (0., 0.)
+        hbox:
+            align (0., 0.)
+            add "effectNewTreeGrowing"
+            add "effectNewBudGrowing"
     else:
         text toPlace align (0., 0.)
 
