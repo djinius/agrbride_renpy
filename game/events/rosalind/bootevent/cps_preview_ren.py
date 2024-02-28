@@ -77,13 +77,14 @@ class BootingMessage():
         Optional keyword arguments that will be applied to the text
         to style it.
     """
-    def __init__(self, text, cps=25, **properties):
+    def __init__(self, cps=25, **properties):
 
         super(BootingMessage, self).__init__()
 
         # Store original arguments for recreating the Text child later
-        self.textList = text
+        self.text = ""
         self.cps = cps
+        self.cursor = True
         self.original_properties = properties
 
         self.reset()
@@ -92,7 +93,7 @@ class BootingMessage():
         """Create a new Text object with the current CPS."""
         newst = 1. / self.cps
 
-        ret = Text(self.originalText[0:self.displayedLength], **self.original_properties)
+        ret = self.originalText[0:self.displayedLength]
         if self.displayedLength < len(self.originalText):
             if (self.start_st is None) or (st - self.current_st > newst):
                 self.displayedLength+=1
@@ -100,16 +101,24 @@ class BootingMessage():
             if (self.start_st is None):
                 self.start_st = st
             st = newst
+            ret += "{image=events/rosalind/bootevent/cursor.png}"
+            self.cursor = True
         else:
-            st = None
+            if st - self.current_st > .5:
+                if self.cursor:
+                    ret += "{image=events/rosalind/bootevent/cursor.png}"
+                self.cursor = not self.cursor
+                self.current_st = st
 
-        return ret, st
+            st = .5
 
-    def reset(self):
+        return Text(ret, **self.original_properties), st
+
+    def reset(self, text=""):
         """Update the displayable to show the text at the new CPS."""
         self.displayedLength = 0
         self.textIndex = 0
-        self.originalText = self.textList[0]
+        self.originalText = text
         self.start_st = None
 
         # The "start time" of the animation
@@ -117,27 +126,14 @@ class BootingMessage():
         # The current st of the animation
         self.current_st = 0
 
-    def switch(self):
-        if self.textIndex < len(self.textList):
-            self.textIndex += 1
-            self.originalText += self.textList[self.textIndex]
-            self.start_st = None
+    def appendText(self, text):
+        self.originalText += text
+        lineFeedCount = self.originalText.count('\n')
+        while lineFeedCount > 8:
+            firstLF = self.originalText.index('\n')
+            self.originalText = self.originalText[(firstLF + 1):]
+            self.displayedLength -= firstLF + 1
+            lineFeedCount = self.originalText.count('\n')
+        self.start_st = None
 
-bootingMessage1 = "Atremius systems\nRevision 800 model H.A.C.K.E.R.\nversion 2.4\n"
-bootingMessage2 = "\nRegistering new master..."
-bootingMessage3 = "\nNew quest accepted.\nTime flies like an arrow..."
-bootingMessage4 = "\nExecuting runtime bugfixes..."
-bootingMessage5 = "\nTraversing word trie..."
-bootingMessage6 = " Done."
-bootingMessage7 = "\n\nAccepting 'Rosalind' as instance identifier."
-bootingMessage8 = "\nGenerating nerve tissues..."
-bootingMessage9 = "\nLearning to move muscles..."
-bootingMessageA = "\n\nInitial setup complete."
-bootingMessageList = [
-    bootingMessage1, bootingMessage2, bootingMessage3,
-    bootingMessage4, bootingMessage5, bootingMessage6,
-    bootingMessage7, bootingMessage8, bootingMessage9,
-    bootingMessageA
-    ]
-
-bootingMessageText = BootingMessage(bootingMessageList, cps=15, font="terminat.ttf", size=30)
+bootingMessageText = BootingMessage(cps=15, font="terminat.ttf", size=30)
